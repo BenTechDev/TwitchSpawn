@@ -1,7 +1,7 @@
 package net.programmer.igoodie.twitchspawn.network.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.programmer.igoodie.twitchspawn.client.gui.GlobalChatCooldownOverlay;
 
 import java.util.function.Supplier;
@@ -17,11 +17,11 @@ public class GlobalChatCooldownPacket {
     }
 
     public static void handle(final GlobalChatCooldownPacket packet,
-                              Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(() -> {
+                              CustomPayloadEvent.Context context) {
+        context.enqueueWork(() -> {
             GlobalChatCooldownOverlay.setCooldownTimestamp(packet.timestamp);
         });
-        context.get().setPacketHandled(true);
+        context.setPacketHandled(true);
     }
 
     /* -------------------------------- */

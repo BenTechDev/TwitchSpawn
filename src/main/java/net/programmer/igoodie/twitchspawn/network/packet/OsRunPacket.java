@@ -1,7 +1,7 @@
 package net.programmer.igoodie.twitchspawn.network.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.programmer.igoodie.twitchspawn.tslanguage.action.OsRunAction;
 
 import java.util.function.Supplier;
@@ -20,9 +20,9 @@ public class OsRunPacket {
         return new OsRunPacket(shell, script);
     }
 
-    public static void handle(final OsRunPacket packet, Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(() -> OsRunAction.handleLocalScript(packet.shell, packet.script));
-        context.get().setPacketHandled(true);
+    public static void handle(final OsRunPacket packet, CustomPayloadEvent.Context context) {
+        context.enqueueWork(() -> OsRunAction.handleLocalScript(packet.shell, packet.script));
+        context.setPacketHandled(true);
     }
 
     /* ------------------------------------------------ */

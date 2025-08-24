@@ -1,7 +1,7 @@
 package net.programmer.igoodie.twitchspawn.network.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.programmer.igoodie.twitchspawn.client.gui.StatusIndicatorOverlay;
 
 import java.util.function.Supplier;
@@ -17,11 +17,11 @@ public class StatusChangedPacket {
     }
 
     public static void handle(final StatusChangedPacket packet,
-                              Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(() -> {
+                              CustomPayloadEvent.Context context) {
+        context.enqueueWork(() -> {
             StatusIndicatorOverlay.setRunning(packet.status);
         });
-        context.get().setPacketHandled(true);
+        context.setPacketHandled(true);
     }
 
     /* ---------------------------- */
